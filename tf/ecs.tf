@@ -18,7 +18,7 @@ module "ecs" {
       container_definitions = {
         jason-container = { #container name -> Change
           essential = true
-          image     = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/${local.prefix}-ecr:latest"
+          image     = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/${local.name_prefix}-ecr:latest"
           port_mappings = [
             {
               containerPort = 8080
@@ -29,7 +29,7 @@ module "ecs" {
       }
       assign_public_ip                   = true
       deployment_minimum_healthy_percent = 100
-      subnet_ids                   = flatten[data.aws_subnets.public.ids] #List of subnet IDs to use for your tasks
+      subnet_ids                   = flatten(data.aws_subnets.public.ids) #List of subnet IDs to use for your tasks
       security_group_ids           = [module.security_group.security_group_id] #Create a SG resource and pass it here
     }
   }
