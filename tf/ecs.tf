@@ -29,8 +29,8 @@ module "ecs" {
       }
       assign_public_ip                   = true
       deployment_minimum_healthy_percent = 100
-      subnet_ids                   = flatten(data.aws_subnets.public.ids) #List of subnet IDs to use for your tasks
-      security_group_ids           = [module.security_group.security_group_id] #Create a SG resource and pass it here
+      subnet_ids                         = flatten(data.aws_subnets.public.ids)      #List of subnet IDs to use for your tasks
+      security_group_ids                 = [module.security_group.security_group_id] #Create a SG resource and pass it here
     }
   }
 }
@@ -42,9 +42,9 @@ module "security_group" {
 
   name        = "${local.name_prefix}-ecs-sg"
   description = "ECS security group"
-  vpc_id      = data.aws_vpc.default.id  
+  vpc_id      = data.aws_vpc.default.id
 
   ingress_cidr_blocks = ["0.0.0.0/0"]
   ingress_rules       = ["http-8080-tcp"]
-  egress_rules        = ["all-all"]  
+  egress_rules        = ["all-all"]
 }
